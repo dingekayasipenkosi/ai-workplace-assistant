@@ -122,7 +122,9 @@ export const sendChatMessage = createServerFn({ method: "POST" })
     if (aErr) throw new Error(aErr.message);
 
     // bump thread updated_at and auto-title on first exchange
-    const updates: Record<string, unknown> = { updated_at: new Date().toISOString() };
+    const updates: { updated_at: string; title?: string } = {
+      updated_at: new Date().toISOString(),
+    };
     if (!history || history.length === 0) {
       updates.title = data.message.slice(0, 60);
     }
